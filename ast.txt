@@ -1,0 +1,299 @@
+{ type: 'ContractDefinition',
+  name: 'testLL',
+  baseContracts: [],
+  subNodes: 
+   [ { type: 'StateVariableDeclaration',
+       variables: [Array],
+       initialValue: [Object],
+       loc: [Object] },
+     { type: 'StateVariableDeclaration',
+       variables: [Array],
+       initialValue: null,
+       loc: [Object] },
+     { type: 'FunctionDefinition',
+       name: 'LongList',
+       parameters: [Array],
+       returnParameters: null,
+       body: [Object],
+       visibility: 'public',
+       modifiers: [],
+       isConstructor: false,
+       stateMutability: null,
+       loc: [Object] } ],
+  kind: 'contract',
+  loc: { start: { line: 7, column: 0 }, end: { line: 24, column: 0 } } }
+{ type: 'VariableDeclaration',
+  typeName: 
+   { type: 'ElementaryTypeName',
+     name: 'uint',
+     loc: { start: [Object], end: [Object] } },
+  name: 'LARGEGAS',
+  expression: 
+   { type: 'NumberLiteral',
+     number: '100000',
+     subdenomination: null,
+     loc: { start: [Object], end: [Object] } },
+  visibility: 'default',
+  isStateVar: true,
+  isDeclaredConst: true,
+  isIndexed: false,
+  loc: { start: { line: 9, column: 18 }, end: { line: 9, column: 18 } } }
+{ type: 'VariableDeclaration',
+  typeName: 
+   { type: 'ElementaryTypeName',
+     name: 'address',
+     loc: { start: [Object], end: [Object] } },
+  name: 'addrArr',
+  expression: null,
+  visibility: 'default',
+  isStateVar: true,
+  isDeclaredConst: false,
+  isIndexed: false,
+  loc: 
+   { start: { line: 11, column: 12 },
+     end: { line: 11, column: 12 } } }
+{ type: 'FunctionDefinition',
+  name: 'LongList',
+  parameters: 
+   [ { type: 'VariableDeclaration',
+       typeName: [Object],
+       name: 'nextV',
+       storageLocation: null,
+       isStateVar: false,
+       isIndexed: false,
+       loc: [Object] },
+     { type: 'VariableDeclaration',
+       typeName: [Object],
+       name: 'arr',
+       storageLocation: 'memory',
+       isStateVar: false,
+       isIndexed: false,
+       loc: [Object] },
+     { type: 'VariableDeclaration',
+       typeName: [Object],
+       name: '_addr',
+       storageLocation: null,
+       isStateVar: false,
+       isIndexed: false,
+       loc: [Object] } ],
+  returnParameters: null,
+  body: 
+   { type: 'Block',
+     statements: [ [Object], [Object] ],
+     loc: { start: [Object], end: [Object] } },
+  visibility: 'public',
+  modifiers: [],
+  isConstructor: false,
+  stateMutability: null,
+  loc: { start: { line: 13, column: 4 }, end: { line: 22, column: 4 } } }
+{ type: 'VariableDeclaration',
+  typeName: 
+   { type: 'ElementaryTypeName',
+     name: 'uint256',
+     loc: { start: [Object], end: [Object] } },
+  name: 'nextV',
+  storageLocation: null,
+  isStateVar: false,
+  isIndexed: false,
+  loc: 
+   { start: { line: 13, column: 22 },
+     end: { line: 13, column: 30 } } }
+{ type: 'VariableDeclaration',
+  typeName: 
+   { type: 'ArrayTypeName',
+     baseTypeName: { type: 'ElementaryTypeName', name: 'uint', loc: [Object] },
+     length: null,
+     loc: { start: [Object], end: [Object] } },
+  name: 'arr',
+  storageLocation: 'memory',
+  isStateVar: false,
+  isIndexed: false,
+  loc: 
+   { start: { line: 13, column: 37 },
+     end: { line: 13, column: 51 } } }
+{ type: 'VariableDeclaration',
+  typeName: 
+   { type: 'ElementaryTypeName',
+     name: 'address',
+     loc: { start: [Object], end: [Object] } },
+  name: '_addr',
+  storageLocation: null,
+  isStateVar: false,
+  isIndexed: false,
+  loc: 
+   { start: { line: 13, column: 56 },
+     end: { line: 13, column: 64 } } }
+{ type: 'ExpressionStatement',
+  expression: 
+   { type: 'BinaryOperation',
+     operator: '=',
+     left: { type: 'Identifier', name: 'addrArr', loc: [Object] },
+     right: { type: 'Identifier', name: '_addr', loc: [Object] },
+     loc: { start: [Object], end: [Object] } },
+  loc: 
+   { start: { line: 14, column: 8 },
+     end: { line: 14, column: 23 } } }
+{ type: 'ForStatement',
+  initExpression: 
+   { type: 'VariableDeclarationStatement',
+     variables: [ [Object] ],
+     variable_name: 'i',
+     initialValue: { type: 'Identifier', name: 'nextV', loc: [Object] },
+     loc: { start: [Object], end: [Object] } },
+  conditionExpression: 
+   { type: 'BinaryOperation',
+     operator: '<',
+     left: { type: 'Identifier', name: 'i', loc: [Object] },
+     right: 
+      { type: 'MemberAccess',
+        expression: [Object],
+        expression_name: 'arr',
+        memberName: 'length',
+        loc: [Object] },
+     loc: { start: [Object], end: [Object] } },
+  loopExpression: 
+   { type: 'ExpressionStatement',
+     expression: 
+      { type: 'UnaryOperation',
+        operator: '++',
+        subExpression: [Object],
+        isPrefix: false,
+        loc: [Object] } },
+  body: 
+   { type: 'Block',
+     statements: [ [Object] ],
+     loc: { start: [Object], end: [Object] } },
+  loc: { start: { line: 16, column: 8 }, end: { line: 20, column: 8 } } }
+{ type: 'VariableDeclaration',
+  typeName: 
+   { type: 'ElementaryTypeName',
+     name: 'uint256',
+     loc: { start: [Object], end: [Object] } },
+  name: 'i',
+  storageLocation: null,
+  isStateVar: false,
+  isIndexed: false,
+  loc: 
+   { start: { line: 16, column: 12 },
+     end: { line: 16, column: 20 } } }
+{ type: 'ExpressionStatement',
+  expression: 
+   { type: 'UnaryOperation',
+     operator: '++',
+     subExpression: { type: 'Identifier', name: 'i', loc: [Object] },
+     isPrefix: false,
+     loc: { start: [Object], end: [Object] } } }
+{ type: 'ExpressionStatement',
+  expression: 
+   { type: 'FunctionCall',
+     expression: 
+      { type: 'MemberAccess',
+        expression: [Object],
+        expression_name: 'addrArr',
+        memberName: 'send',
+        loc: [Object] },
+     arguments: [ [Object] ],
+     names: [],
+     loc: { start: [Object], end: [Object] } },
+  loc: 
+   { start: { line: 18, column: 12 },
+     end: { line: 18, column: 32 } } }
+{ type: 'FunctionCall',
+  expression: 
+   { type: 'MemberAccess',
+     expression: { type: 'Identifier', name: 'addrArr', loc: [Object] },
+     expression_name: 'addrArr',
+     memberName: 'send',
+     loc: { start: [Object], end: [Object] } },
+  arguments: 
+   [ { type: 'IndexAccess',
+       base: [Object],
+       index: [Object],
+       base_val: 'arr',
+       index_val: 'i',
+       loc: [Object] } ],
+  names: [],
+  loc: 
+   { start: { line: 18, column: 12 },
+     end: { line: 18, column: 31 } } }
+{ type: 'VariableDeclaration',
+  typeName: 
+   { type: 'ElementaryTypeName',
+     name: 'uint256',
+     loc: { start: [Object], end: [Object] } },
+  name: 'nextV',
+  storageLocation: null,
+  isStateVar: false,
+  isIndexed: false,
+  loc: 
+   { start: { line: 13, column: 22 },
+     end: { line: 13, column: 30 } } }
+{ type: 'VariableDeclaration',
+  typeName: 
+   { type: 'ArrayTypeName',
+     baseTypeName: { type: 'ElementaryTypeName', name: 'uint', loc: [Object] },
+     length: null,
+     loc: { start: [Object], end: [Object] } },
+  name: 'arr',
+  storageLocation: 'memory',
+  isStateVar: false,
+  isIndexed: false,
+  loc: 
+   { start: { line: 13, column: 37 },
+     end: { line: 13, column: 51 } } }
+{ type: 'VariableDeclaration',
+  typeName: 
+   { type: 'ElementaryTypeName',
+     name: 'address',
+     loc: { start: [Object], end: [Object] } },
+  name: '_addr',
+  storageLocation: null,
+  isStateVar: false,
+  isIndexed: false,
+  loc: 
+   { start: { line: 13, column: 56 },
+     end: { line: 13, column: 64 } } }
+{ type: 'ExpressionStatement',
+  expression: 
+   { type: 'BinaryOperation',
+     operator: '=',
+     left: { type: 'Identifier', name: 'addrArr', loc: [Object] },
+     right: { type: 'Identifier', name: '_addr', loc: [Object] },
+     loc: { start: [Object], end: [Object] } },
+  loc: 
+   { start: { line: 14, column: 8 },
+     end: { line: 14, column: 23 } } }
+{ type: 'VariableDeclaration',
+  typeName: 
+   { type: 'ElementaryTypeName',
+     name: 'uint256',
+     loc: { start: [Object], end: [Object] } },
+  name: 'i',
+  storageLocation: null,
+  isStateVar: false,
+  isIndexed: false,
+  loc: 
+   { start: { line: 16, column: 12 },
+     end: { line: 16, column: 20 } } }
+{ type: 'ExpressionStatement',
+  expression: 
+   { type: 'UnaryOperation',
+     operator: '++',
+     subExpression: { type: 'Identifier', name: 'i', loc: [Object] },
+     isPrefix: false,
+     loc: { start: [Object], end: [Object] } } }
+{ type: 'ExpressionStatement',
+  expression: 
+   { type: 'FunctionCall',
+     expression: 
+      { type: 'MemberAccess',
+        expression: [Object],
+        expression_name: 'addrArr',
+        memberName: 'send',
+        loc: [Object] },
+     arguments: [ [Object] ],
+     names: [],
+     loc: { start: [Object], end: [Object] } },
+  loc: 
+   { start: { line: 18, column: 12 },
+     end: { line: 18, column: 32 } } }

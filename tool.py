@@ -47,6 +47,136 @@ def show_data(data):
     root.minsize(800, 800)
     root.mainloop()
 
+def preprocess(json_list):
+
+    compact_json = []
+    ix = -1
+    fx = -1
+
+    for i in json_list:
+        if i["type"] == "ContractDefinition":
+            new_contract = dict()
+            new_contract["type"] = i["type"]
+            new_contract["name"] = i["name"]
+            new_contract["kind"] = i["kind"]
+            compact_json.append(new_contract)
+            ix +=1
+            fx = -1
+
+        elif i["type"] =="VariableDeclaration":
+            if i["typeName"]["type"] != "ElementaryTypeName":
+                continue
+            # type, typename
+            new_variable = dict()
+            new_variable["type"] = i["type"]
+            new_variable["typename"] = i["typeName"]["name"]
+            # line number ?
+
+           #Contract in
+            if fx == -1:
+                try:
+                    compact_json[ix]["variables"].append(new_variable)
+                except:
+                    compact_json[ix]["variables"] = [new_variable]
+           #Function in
+            else:
+                try:
+                    compact_json[ix]["functions"][fx]["variables"].append(new_variable)
+                except:
+                    compact_json[ix]["functions"][fx]["variables"] = [new_variable]
+                    
+            
+        elif i["type"] =="FunctionDefinition":
+            # function name, parameter(=type,name)
+            new_func = dict()
+            new_func["type"] = i["type"]
+            new_func["name"] = i["name"]
+            new_func["parameters"] = [k["name"] for k in i["parameters"]]
+
+            #Contract First Function
+            try:
+                compact_json[ix]["functions"].append(new_func)
+            except:
+                compact_json[ix]["functions"] = [new_func]
+                
+            fx +=1
+
+        elif i["type"] =="FunctionCall":
+            # 1 expression -> type == memberAccess
+            # 2 expression -> type == Identifier
+            # memberName, loc 
+            new_funccall = dict()
+            new_funccall["type"] = i["type"]
+            new_funccall["expression_type"] = i["expression"]["type"]
+            
+            if i["expression"]["type"] == "Identifier": # catch require 
+                new_funccall["membername"] = i["expression"]["name"]
+            elif i["expression"]["type"] =="MemberAccess":                                      # catch call
+                try:
+                    new_funccall["membername"] = i["expression"]["expression"]["memberName"]
+                    new_funccall["line"] = [i["loc"]["start"]["line"],i["loc"]["end"]["line"]]
+                except:
+                    new_funccall["membername"] = i["expression"]["memberName"]
+            #Contract in 
+            if fx == -1:
+                try:
+                    compact_json[ix]["function_call"].append(new_funccall)
+                except:
+                    compact_json[ix]["function_call"] = [new_funccall]
+            #Function in
+            else:
+                try:
+                    compact_json[ix]["functions"][fx]["function_call"].append(new_funccall)
+                except:
+                    compact_json[ix]["functions"][fx]["function_call"] = [new_funccall]
+
+        elif i["type"] =="ExpressionStatement":
+            # type, operator
+            new_expression = dict()
+            new_expression["type"] = i["type"]
+            new_expression["expression_type"] = i["expression"]["type"]
+            if i["expression"]["type"] != "BinaryOperation":
+                continue
+            new_expression["operator"] = i["expression"]["operator"]
+            new_expression["line"] = [i["loc"]["start"]["line"],i["loc"]["end"]["line"]]
+
+            #Contract in 
+            if fx == -1:
+                try:
+                    compact_json[ix]["expression"].append(new_expression)
+                except:
+                    compact_json[ix]["expression"] = [new_expression]
+           #Function in
+            else:
+                try:
+                    compact_json[ix]["functions"][fx]["expression"].append(new_expression)
+                except:
+                    compact_json[ix]["functions"][fx]["expression"] = [new_expression]
+
+            
+
+        elif i["type"] =="ForStatement":
+            # type, initExpression->initvalue->name, conditionExpression->right->expression_name
+            new_for = dict()
+            new_for["type"] = i["type"]
+            new_for["init_expression"] = i["initExpression"]["initialValue"]["name"]
+            new_for["condition"] = i["conditionExpression"]["right"]["expression_name"]
+
+            try:
+                compact_json[ix]["functions"][fx]["ForStatement"].append(new_for)
+            except:
+                compact_json[ix]["functions"][fx]["ForStatement"] = [new_for]
+
+
+        elif i["type"] =="IfStatement":
+            # type,
+            new_if = dict()
+
+
+    print(compact_json)
+
+
+
 def main():
 	
 	file = sys.argv[1]
@@ -61,6 +191,8 @@ def main():
 	
 	json_list = [json.loads(i) for i in ast_list]
 	print(json_list)
+
+	preprocess(json_list)
 	#print(jsons)
 # Version select is not adapted
 #	version = jsons['body'][0]['start_version']['version']
