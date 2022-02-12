@@ -3,6 +3,7 @@ import sys
 import json
 import uuid
 import tkinter as tk
+from rule import rule_build
 from tkinter import ttk
 
 
@@ -108,9 +109,13 @@ def preprocess(json_list):
             new_funccall = dict()
             new_funccall["type"] = i["type"]
             new_funccall["expression_type"] = i["expression"]["type"]
-            
-            if i["expression"]["type"] == "Identifier": # catch require 
+            if i["expression"]["type"] == "Identifier" and i["expression"]["name"] =="require" : # catch require 
                 new_funccall["membername"] = i["expression"]["name"]
+                if i["arguments"][0]["type"] == "Identifier":
+                    new_funccall["args"] = i["arguments"][0]["name"]
+                elif i["arguments"][0]["type"] == "BinaryOperation":
+                    new_funccall["args"] = i["arguments"][0]["left_id"]
+                new_funccall["line"] = [i["loc"]["start"]["line"],i["loc"]["end"]["line"]]
             elif i["expression"]["type"] =="MemberAccess":                                      # catch call
                 try:
                     new_funccall["membername"] = i["expression"]["expression"]["memberName"]
@@ -171,10 +176,21 @@ def preprocess(json_list):
         elif i["type"] =="IfStatement":
             # type,
             new_if = dict()
+            new_if["type"] = i["type"]
 
+            if i["condition"]["type"] == "Identifier":
+                new_if["args"] = i["condition"]["name"]
+            elif i["condition"]["type"] == "BinaryOperation":
+                new_if["args"] = i["condition"]["left_id"]
 
-    print(compact_json)
+            try:
+                compact_json[ix]["functions"][fx]["IfStatement"].append(new_if)
+            except:
+                compact_json[ix]["functions"][fx]["IfStatement"] = [new_if]
 
+            new_if["line"] = [i["loc"]["start"]["line"],i["loc"]["end"]["line"]]
+
+    return compact_json
 
 
 def main():
@@ -190,10 +206,14 @@ def main():
 	ast_list = ast.stdout.splitlines()	
 	
 	json_list = [json.loads(i) for i in ast_list]
-	print(json_list)
+	#print(json_list)
 
-	preprocess(json_list)
+	compact_json = preprocess(json_list)
+	print(compact_json)
+
+	rule = rule_build.Rule_Build(compact_json)
 	#print(jsons)
+
 # Version select is not adapted
 #	version = jsons['body'][0]['start_version']['version']
 #	compile = subprocess.run(['sh','ex2.sh',version,file],encoding='utf-8')
