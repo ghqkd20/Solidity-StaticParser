@@ -122,6 +122,7 @@ def preprocess(json_list):
                     new_funccall["line"] = [i["loc"]["start"]["line"],i["loc"]["end"]["line"]]
                 except:
                     new_funccall["membername"] = i["expression"]["memberName"]
+                    new_funccall["line"] = [i["loc"]["start"]["line"],i["loc"]["end"]["line"]]
             #Contract in 
             if fx == -1:
                 try:
@@ -209,9 +210,10 @@ def main():
 	#print(json_list)
 
 	compact_json = preprocess(json_list)
-	print(compact_json)
+	print(file,compact_json)
 
-	rule = rule_build.Rule_Build(compact_json)
+	rule = rule_build.Rule_Build(file,compact_json)
+	print(rule.get_result())
 	#print(jsons)
 
 # Version select is not adapted
