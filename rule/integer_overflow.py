@@ -1,5 +1,4 @@
 import sys, os
-import linecache
 
 sys.path.append(os.path.dirname(os.path.abspath(os.path.dirname(__file__))))
 
@@ -29,7 +28,6 @@ def apply(file,src):
         for func in tp['functions']:
             if 'expression' in func:
                 binary(answer,func['expression'])
-    print(answer[1])
     
                 
     if answer[0] == True:

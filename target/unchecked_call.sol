@@ -7,8 +7,8 @@ contract B {
                 bool tf;
                 (bool ok, ) = msg.sender.call.value(1 ether)("");
                 msg.sender.call.value(2 ether)("");
-		require(ok);
-		if(ok==-1) return ;
+		//require(ok);
+		//if(ok==-1) return ;
 
 //(bool sent, ) = msg.sender.call{value:msg.value}("");
 }

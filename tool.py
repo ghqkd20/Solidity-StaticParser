@@ -93,6 +93,7 @@ def preprocess(json_list):
             new_func["type"] = i["type"]
             new_func["name"] = i["name"]
             new_func["parameters"] = [k["name"] for k in i["parameters"]]
+            new_func["line"] = [i["loc"]["start"]["line"],i["loc"]["end"]["line"]]
 
             #Contract First Function
             try:
@@ -167,7 +168,7 @@ def preprocess(json_list):
             new_for["type"] = i["type"]
             new_for["init_expression"] = i["initExpression"]["initialValue"]["name"]
             new_for["condition"] = i["conditionExpression"]["right"]["expression_name"]
-
+            new_for["line"] = i["loc"]["start"]["line"]
             try:
                 compact_json[ix]["functions"][fx]["ForStatement"].append(new_for)
             except:
@@ -208,7 +209,7 @@ def main():
 	
 	json_list = [json.loads(i) for i in ast_list]
 	#print(json_list)
-
+	print("HERE")
 	compact_json = preprocess(json_list)
 	print(file,compact_json)
 

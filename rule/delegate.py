@@ -28,10 +28,8 @@ def apply(file,src):
         result.append(answer[1])
         result.append([])
         with open(file) as f:
-            print("Here",result)
             for i,line in enumerate(f):
                 if i+1 in result[1]:
-                    print('yes',i,line)
                     result[2].append(line)
                         
         return result
