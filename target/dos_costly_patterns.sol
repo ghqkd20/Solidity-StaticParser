@@ -8,9 +8,9 @@ contract testLL{
 
     uint constant LARGEGAS = 100000;
 
-    address addrArr;
+    address payable addrArr;
 
-    function LongList(uint256 nextV, uint[] memory arr, address _addr) public { 
+    function LongList(uint256 nextV, uint[] memory arr, address payable _addr) public {
         addrArr = _addr;
 
         for(uint256 i = nextV;i<arr.length; i++){

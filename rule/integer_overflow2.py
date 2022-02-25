@@ -7,11 +7,12 @@ def binary(answer,func):
 
     for es in func:
         if es['type'] == 'ExpressionStatement' and es['expression_type']=='BinaryOperation':
-            answer.append(es['line'][0])
+            answer[0] = True
+            answer[1].add(es['line'][0])
 
-
+    
 def apply(file,src):
-    result_list = []
+    answer = [False,set(),[]]
 
         # Contract Traverse
     for ix,tp in enumerate(src):
@@ -21,20 +22,21 @@ def apply(file,src):
         # Contract + Binary Operation => Warning
         # In Contract expression
         if 'expression' in tp:
-            binary(result_list,tp['expression'])
+            binary(answer,tp['expression'])
 
         for func in tp['functions']:
             if 'expression' in func:
-                binary(result_list,func['expression'])
-
+                binary(answer,func['expression'])
     
-    if result_list:
+                
+    if answer[0] == True:
         result =["Warning : Binary Operation is used, so Integer Overflow can occur"]
-        result_list.sort()
+        result.append(sorted(answer[1]))
+        result.append([])
         with open(file) as f:
             for i,line in enumerate(f):
-                if i+1 in result_list:
-                    result.append("line : "+str(i+1)+line)
+                if i+1 in result[1]:
+                    result[2].append(line)
 
         return result
 

@@ -5,7 +5,6 @@ sys.path.append(os.path.dirname(os.path.abspath(os.path.dirname(__file__))))
 
 
 def apply(file,src):
-    print("Dos Costly patterns")
 
     result_list = []
     for ix,tp in enumerate(src):
@@ -31,7 +30,7 @@ def apply(file,src):
         with open(file) as f:
             for i,line in enumerate(f):
                 if i+1 in result_list:
-                    result.append(line)
+                    result.append("line : "+str(i+1)+line)
 
         return result
     

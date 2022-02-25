@@ -71,7 +71,8 @@ def preprocess(json_list):
             new_variable = dict()
             new_variable["type"] = i["type"]
             new_variable["typename"] = i["typeName"]["name"]
-            # line number ?
+            new_variable["name"] = i["name"]
+            new_variable["line"] = i["loc"]["start"]["line"]
 
            #Contract in
             if fx == -1:
@@ -116,6 +117,9 @@ def preprocess(json_list):
                     new_funccall["args"] = i["arguments"][0]["name"]
                 elif i["arguments"][0]["type"] == "BinaryOperation":
                     new_funccall["args"] = i["arguments"][0]["left_id"]
+                new_funccall["line"] = [i["loc"]["start"]["line"],i["loc"]["end"]["line"]]
+            elif i["expression"]["type"] == "Identifier" and i["expression"]["name"] =="revert" : # catch revert
+                new_funccall["membername"] = i["expression"]["name"]
                 new_funccall["line"] = [i["loc"]["start"]["line"],i["loc"]["end"]["line"]]
             elif i["expression"]["type"] =="MemberAccess":                                      # catch call
                 try:
@@ -199,9 +203,9 @@ def main():
 	
 	file = sys.argv[1]
 
-# Compile 
-#	print("-------------------Compile Result-------------------")	
-#	compile = subprocess.run(['solc',file],encoding='utf-8')
+# Compile
+	print("\033[3m" +"\033[41m"+"                  Compile Result                        "+"\033[0m")
+	compile = subprocess.run(['solc',file],encoding='utf-8')
 
 #Ast parsing
 	ast = subprocess.run(['sh','ex.sh',file],stdout=subprocess.PIPE,encoding='utf-8')
@@ -209,13 +213,12 @@ def main():
 	
 	json_list = [json.loads(i) for i in ast_list]
 	#print(json_list)
-	print("HERE")
+	#print("HERE")
 	compact_json = preprocess(json_list)
-	print(file,compact_json)
+	#print(file,compact_json)
 
 	rule = rule_build.Rule_Build(file,compact_json)
-	print(rule.get_result())
-	#print(jsons)
+	rule.get_result()
 
 # Version select is not adapted
 #	version = jsons['body'][0]['start_version']['version']

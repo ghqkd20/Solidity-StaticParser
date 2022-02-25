@@ -3,11 +3,9 @@ import sys, os
 sys.path.append(os.path.dirname(os.path.abspath(os.path.dirname(__file__))))
 
 
-
 # parameter = call -> args return
 # [line1,line2] => [True,"args", ], True = not parameter
 def check_line(file,call_list):
-    print("Call_list",call_list)
     tmp = []
     with open(file) as f:
         for i,line in enumerate(f):
@@ -46,7 +44,6 @@ def check_result(check,exclude_list):
     
 
 def apply(file,src):
-    print("Unchecked External Call")
 
     result_list = []
     
@@ -71,14 +68,12 @@ def apply(file,src):
                         exclude_list.append(fc["args"])
             if call_list:
                 check = check_line(file,call_list)
-                print("Check",check)
                 result_list =check_result(check,exclude_list)
-
     if result_list:
         result =["Warning : Unchecked Call is used, Please check your return value"]
         with open(file) as f:
             for i,line in enumerate(f):
                 if i+1 in result_list:
-                    result.append(line)
+                    result.append("line : " +str(i+1)+line)
 
         return result
